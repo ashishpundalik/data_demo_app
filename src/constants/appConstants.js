@@ -1,4 +1,5 @@
 export default {
   DEMO: "demoView",
-  INFO: "infoView"
+  INFO: "infoView",
+  images: []
 };

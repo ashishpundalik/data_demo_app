@@ -4,7 +4,6 @@ import appConstants from '../constants/appConstants.js';
 import Demo from './Demo.jsx';
 import DemoInformation from './DemoInformation.jsx';
 
-console.log("constants: ", appConstants);
 
 require('../scss/dashboard.scss');
 
@@ -31,10 +30,13 @@ class Dashboard extends Component {
 
   render() {
     let CurrentView = this.state.currentView;
+    let props = {
+      images: appConstants.images
+    }
     return (
       <section className = "dashboard-container">
         <AppHeader onViewChange = {this.onViewChange} />
-        <CurrentView />
+        <CurrentView {...props} />
       </section>
     )
   }

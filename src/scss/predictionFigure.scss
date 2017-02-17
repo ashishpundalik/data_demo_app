@@ -1,0 +1,31 @@
+.predictions-img-figure {
+  margin: 1%;
+  height: 200px;
+  width: 200px;
+  flex-direction: column;
+  .retina-img-prediction {
+    height: 150px;
+    width: 150px;
+  }
+  .predictions-img-info {
+    position: relative;
+    width: 100%;
+    height: 44px;
+    margin-top: 5px;
+    border: 1px solid red;
+    .predictions-info-text {
+      text-align: center;
+      font-size: 0.7em;
+      margin: 0;
+      padding: 0;
+    }
+  }
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% { opacity: 0; }
+}

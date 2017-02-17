@@ -7,7 +7,6 @@ module.exports = (function() {
   var APP_DIR = path.resolve(__dirname, 'src');
 
   var HTMLWebpackPlugin = require('html-webpack-plugin');
-  // var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
   var config = {
     entry: APP_DIR + '/index.jsx',
@@ -17,6 +16,9 @@ module.exports = (function() {
     },
     module: {
       loaders: [{
+        test: /\.(png|jpeg|gif)$/,
+        loader: "file-loader?&name=assets/retina_images/[name].[ext]"
+      }, {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
@@ -31,11 +33,7 @@ module.exports = (function() {
     plugins: [new HTMLWebpackPlugin({
       template: APP_DIR + '/assets/app.html',
       inject: 'body'
-    })/*, new UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })*/]
+    })]
   }
 
   return config;
