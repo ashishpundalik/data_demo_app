@@ -1,29 +1,34 @@
 import React, { Component } from 'react';
 import HttpHelper from '../services/HttpHelper.js';
 import PredictionImage from './PredictionImage.jsx';
+import appConstants from '../constants/appConstants.js';
 
 require('../scss/demo.scss');
 
 class Demo extends Component {
   constructor(props) {
     super(props);
-    this.IMAGE_TYPE = "healthy";
-    this.IMAGE_NOS = 10;
-    let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
+    console.log("In Demo");
+    this.IMAGE_TYPE_HEALTHY = "healthy";
+    this.IMAGE_TYPE_DISEASED = "diseased";
+    const IMAGE_NOS = 5;
+    let healthyImages = this.props.images[this.IMAGE_TYPE_HEALTHY].slice(0,IMAGE_NOS);
+    let diseasedImages = this.props.images[this.IMAGE_TYPE_DISEASED].slice(0,IMAGE_NOS);
+    let images = healthyImages.concat(diseasedImages);
     this.state = {
       predictions: images,
       isPredicting: false,
       predictingTextClass: 'predicted-text-hidden'
     }
     this.onLoadPredictionsClicked = this.onLoadPredictionsClicked.bind(this);
-    this.onImageTypeChanged = this.onImageTypeChanged.bind(this);
+    this.onLoadNextImagesClicked = this.onLoadNextImagesClicked.bind(this);
   }
 
   onLoadPredictionsClicked() {
     let params = {
-      start_index: 0,
-      end_index: 20,
-      filter_choice: this.IMAGE_TYPE
+      start_index: appConstants.image_start_index,
+      end_index: appConstants.image_end_index,
+      filter_choice: 'all'
     };
     let promise = HttpHelper.get('http://localhost:8000/predictions', params);
     this.setState({
@@ -31,8 +36,7 @@ class Demo extends Component {
       predictingTextClass: 'predicted-text'
     });
     promise.then((response) => {
-      let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
-      let tranformedPredictions = this.transformPredictions(response, images);
+      let tranformedPredictions = this.transformPredictions(response);
       this.setState({
         predictions: tranformedPredictions,
         isPredicting: false,
@@ -47,24 +51,35 @@ class Demo extends Component {
     });
   }
 
-  transformPredictions(predictions, images) {
-    return images.map((val, index) => {
+  transformPredictions(predictions) {
+    return predictions.map((val, index) => {
       return {
-        url: val.url,
+        url: val.img_url.replace('retina/retina_images/', ''),
         actual: val.actual,
-        predicted: predictions[index].predicted
+        predicted: val.predicted
       }
     });
   }
 
-  onImageTypeChanged(event) {
-    this.IMAGE_TYPE = event.target.value;
-    let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
+  onLoadNextImagesClicked() {
+    let healthyImagesAll = this.props.images[this.IMAGE_TYPE_HEALTHY];
+    let diseasedImagesAll = this.props.images[this.IMAGE_TYPE_DISEASED];
+    if(healthyImagesAll.length === appConstants.image_end_index || diseasedImagesAll.length === appConstants.image_end_index) {
+      appConstants.image_start_index = 0;
+      appConstants.image_end_index = 5;
+    }
+    let start_index = appConstants.image_start_index + 5;
+    let end_index = appConstants.image_end_index + 5;
+    let healthyImages = this.props.images[this.IMAGE_TYPE_HEALTHY].slice(start_index,end_index);
+    let diseasedImages = this.props.images[this.IMAGE_TYPE_DISEASED].slice(start_index,end_index);
+    let images = healthyImages.concat(diseasedImages);
+    appConstants.image_start_index = start_index;
+    appConstants.image_end_index = end_index;
     this.setState({
       predictions: images,
-      predictingTextClass: 'predicted-text-hidden',
-      isPredicting: false
-    });
+      isPredicting: false,
+      predictingTextClass: 'predicted-text-hidden'
+    })
   }
 
   render() {
@@ -87,10 +102,7 @@ class Demo extends Component {
         <section className = 'retinopathy-images-table'>
           <div className = 'images-grid-header'>
             <button className = "image-grid-header-row" onClick = {this.onLoadPredictionsClicked}>PREDICT</button>
-            <select className = 'image-grid-header-row' onChange = {this.onImageTypeChanged}>
-              <option value = 'healthy'>HEALTHY</option>
-              <option value = 'diseased'>DISEASED</option>
-            </select>
+            <button className = "image-grid-header-row" onClick = {this.onLoadNextImagesClicked}>LOAD NEXT 10</button>
           </div>
           <div className = "retinopathy-images-grid-container">
             {ImageElem}

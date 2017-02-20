@@ -29,6 +29,7 @@ let fetchImageInfo = () => {
   require('./assets/bg-image.jpg');
   let promise = HttpHelper.get("http://localhost:8000/getImages", {});
   promise.then((response) => {
+    console.log(response);
     init(response);
   }).catch((failure) => {
     console.log("Promise Failed: ", failure);
