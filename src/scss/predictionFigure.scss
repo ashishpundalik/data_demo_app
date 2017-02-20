@@ -18,11 +18,17 @@
       font-size: 0.7em;
       margin: 0;
       padding: 0;
+      .predicted-text-hidden {
+        visibility: hidden;
+      }
+      .predicted-text {
+        visibility: visible;
+      }
     }
   }
 }
 
-.blink_me {
+.blink-me {
   animation: blinker 1s linear infinite;
 }
 

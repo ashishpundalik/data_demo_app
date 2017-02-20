@@ -11,7 +11,14 @@ let preloadImages = (images) => {
   for(let image of images) {
     require('./assets/retina_images/'+image.url);
   }
-  appConstants.images = images;
+}
+
+let init = (response) => {
+  let healthyImages = response.healthy;
+  let diseasedImages = response.diseased;
+  let images = healthyImages.concat(diseasedImages);
+  preloadImages(images);
+  appConstants.images = response;
   render(
     <App />,
     document.getElementById("app")
@@ -21,8 +28,7 @@ let preloadImages = (images) => {
 let fetchImageInfo = () => {
   let promise = HttpHelper.get("http://localhost:8000/getImages", {});
   promise.then((response) => {
-    let images = response.slice(0, 20);
-    preloadImages(images);
+    init(response);
   }).catch((failure) => {
     console.log("Promise Failed: ", failure);
   });
