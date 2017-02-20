@@ -8,12 +8,15 @@ class Demo extends Component {
   constructor(props) {
     super(props);
     this.IMAGE_TYPE = "healthy";
-    let images = this.props.images[this.IMAGE_TYPE].slice(0,2);
+    this.IMAGE_NOS = 10;
+    let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
     this.state = {
       predictions: images,
-      isPredicting: false
+      isPredicting: false,
+      predictingTextClass: 'predicted-text-hidden'
     }
     this.onLoadPredictionsClicked = this.onLoadPredictionsClicked.bind(this);
+    this.onImageTypeChanged = this.onImageTypeChanged.bind(this);
   }
 
   onLoadPredictionsClicked() {
@@ -24,18 +27,21 @@ class Demo extends Component {
     };
     let promise = HttpHelper.get('http://localhost:8000/predictions', params);
     this.setState({
-      isPredicting: true
+      isPredicting: true,
+      predictingTextClass: 'predicted-text'
     });
     promise.then((response) => {
-      let images = this.props.images[this.IMAGE_TYPE].slice(0,2);
+      let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
       let tranformedPredictions = this.transformPredictions(response, images);
       this.setState({
         predictions: tranformedPredictions,
-        isPredicting: false
+        isPredicting: false,
+        predictingTextClass: 'predicted-text'
       });
     }).catch((failure) => {
       this.setState({
-        isPredicting: false
+        isPredicting: false,
+        predictingTextClass: 'predicted-text-hidden'
       });
       console.log('Promise Failed: ', failure);
     });
@@ -51,6 +57,16 @@ class Demo extends Component {
     });
   }
 
+  onImageTypeChanged(event) {
+    this.IMAGE_TYPE = event.target.value;
+    let images = this.props.images[this.IMAGE_TYPE].slice(0,this.IMAGE_NOS);
+    this.setState({
+      predictions: images,
+      predictingTextClass: 'predicted-text-hidden',
+      isPredicting: false
+    });
+  }
+
   render() {
     let ImageElem = this.state.predictions.map((val, index) => {
       let imgPath = `assets/retina_images/${val.url}`;
@@ -60,16 +76,26 @@ class Demo extends Component {
         actualVal: val.actual,
         imgPath,
         predicted: (val.predicted !== null && val.predicted !== undefined) ? val.predicted : 'processing...',
-        predictingTextClass: this.state.isPredicting ? 'predicted-text' : 'predicted-text-hidden',
+        predictedTextClass: this.state.predictingTextClass,
         blinkClass: this.state.isPredicting ? 'blink-me' : ''
       };
       return <PredictionImage {...props} />
     });
     return (
-      <section className = 'app-view'>
-        <h1>DEMO</h1>
-        <button onClick = {this.onLoadPredictionsClicked}>LOAD</button>
-        {ImageElem}
+      <section className = 'app-view app-demo-container'>
+        <h1>Diabetic Retinopathy Detection(DRD)</h1>
+        <section className = 'retinopathy-images-table'>
+          <div className = 'images-grid-header'>
+            <button className = "image-grid-header-row" onClick = {this.onLoadPredictionsClicked}>PREDICT</button>
+            <select className = 'image-grid-header-row' onChange = {this.onImageTypeChanged}>
+              <option value = 'healthy'>HEALTHY</option>
+              <option value = 'diseased'>DISEASED</option>
+            </select>
+          </div>
+          <div className = "retinopathy-images-grid-container">
+            {ImageElem}
+          </div>
+        </section>
       </section>
     );
   }

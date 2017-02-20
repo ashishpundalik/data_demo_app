@@ -16,7 +16,7 @@ module.exports = (function() {
     },
     module: {
       loaders: [{
-        test: /\.(png|jpeg|gif)$/,
+        test: /\.(png|jpeg|gif|jpg)$/,
         loader: "file-loader?&name=assets/retina_images/[name].[ext]"
       }, {
         test: /\.jsx?$/,
@@ -27,7 +27,7 @@ module.exports = (function() {
         }
       }, {
         test: /\.(scss|sass)$/,
-        loader: 'style-loader!css-loader!sass-loader'
+        loader: 'style-loader!css-loader!sass-loader?sourceMap'
       }]
     },
     plugins: [new HTMLWebpackPlugin({

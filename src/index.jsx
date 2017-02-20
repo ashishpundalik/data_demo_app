@@ -26,6 +26,7 @@ let init = (response) => {
 }
 
 let fetchImageInfo = () => {
+  require('./assets/bg-image.jpg');
   let promise = HttpHelper.get("http://localhost:8000/getImages", {});
   promise.then((response) => {
     init(response);
