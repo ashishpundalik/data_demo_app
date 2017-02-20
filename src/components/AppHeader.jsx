@@ -11,11 +11,8 @@ class AppHeader extends Component {
       }
     };
 
-    this.onNavBtnClicked = (view, event) => {
+    this.onNavBtnClicked = (event) => {
       event.stopPropagation();
-      let btnElems = event.target.parentNode.children;
-      this.resetClassName("nav-btn", btnElems);
-      event.target.className = "nav-btn nav-btn-active";
       this.props.onViewChange(view);
     }
   }
@@ -23,12 +20,16 @@ class AppHeader extends Component {
   render() {
     return (
       <nav className = "app-header-container">
-        <header className = "app-header align-vertical-center">
+        <header className = "app-header">
           <h1>Diabetic Retinopathy Diagnosis(DRD)</h1>
+          <p>This page demos an automated method of Diabetic Retinopathy screening
+            of fundus images of the eye. The images are classified as normal or affected using
+            a deep neural network.
+          </p>
         </header>
         <section className = "header-nav-btns-container">
-          <button className = "nav-btn" onClick = {this.onNavBtnClicked.bind(this, "infoView")}>INFO</button>
-          <button className = "nav-btn nav-btn-active" onClick = {this.onNavBtnClicked.bind(this, "demoView")}>DEMO</button>
+          <button className = "nav-btn" onClick = {this.onNavBtnClicked}>LOAD NEXT 10</button>
+          <button className = "nav-btn" onClick = {this.onNavBtnClicked}>PREDICT</button>
         </section>
       </nav>
     )

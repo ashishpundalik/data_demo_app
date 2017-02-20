@@ -35,17 +35,16 @@ class PredictionImage extends Component {
     let predictedVal = 'processing...';
     if(predicted !== 'processing...') {
       if(predicted === 0) {
-        predictedVal = "healthy";
+        predictedVal = "NORMAL";
       } else {
-        predictedVal = "diseased";
+        predictedVal = "DISEASED";
       }
     }
     return (
       <figure className = 'predictions-img-figure align-vertical-center'>
         <img key = {props.index} className = 'retina-img-prediction' src = {props.imgPath}/>
         <figcaption className = "predictions-img-info">
-          <p className = "actual-text predictions-info-text"><b>Actual: {props.actualVal}</b></p>
-          <p className = "predictions-info-text"><b className = {this.state.predictedTextClass}>Predicted: <span className = {this.state.blinkClass}>{predictedVal}</span></b></p>
+          <p className = "predictions-info-text"><b className = {this.state.predictedTextClass}><span className = {this.state.blinkClass}>{predictedVal}</span></b></p>
         </figcaption>
       </figure>
     )

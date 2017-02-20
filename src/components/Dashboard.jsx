@@ -16,6 +16,10 @@ class Dashboard extends Component {
     };
   }
 
+  onLoadImages() {
+    
+  }
+
   onViewChange(currentView) {
     let currentViewClass;
     if(currentView === appConstants.DEMO) {

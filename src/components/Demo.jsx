@@ -98,12 +98,7 @@ class Demo extends Component {
     });
     return (
       <section className = 'app-view app-demo-container'>
-        <h1>Diabetic Retinopathy Detection(DRD)</h1>
         <section className = 'retinopathy-images-table'>
-          <div className = 'images-grid-header'>
-            <button className = "image-grid-header-row" onClick = {this.onLoadPredictionsClicked}>PREDICT</button>
-            <button className = "image-grid-header-row" onClick = {this.onLoadNextImagesClicked}>LOAD NEXT 10</button>
-          </div>
           <div className = "retinopathy-images-grid-container">
             {ImageElem}
           </div>

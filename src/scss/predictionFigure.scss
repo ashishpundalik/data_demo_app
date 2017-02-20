@@ -1,6 +1,4 @@
 .predictions-img-figure {
-  border: 2px solid #00459b;
-  border-radius: 0.3em;
   margin: 1%;
   height: 200px;
   width: 200px;
@@ -8,13 +6,14 @@
   .retina-img-prediction {
     height: 150px;
     width: 150px;
+    border: 4px solid #3D8C33;
+    border-radius: 75px;
   }
   .predictions-img-info {
     position: relative;
     width: 100%;
     height: 44px;
     margin-top: 5px;
-    border-top: 2px solid #00459b;
     .predictions-info-text {
       text-align: center;
       font-size: 0.7em;
