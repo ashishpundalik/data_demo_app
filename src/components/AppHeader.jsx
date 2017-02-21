@@ -28,8 +28,8 @@ class AppHeader extends Component {
           </p>
         </header>
         <section className = "header-nav-btns-container">
-          <button className = "nav-btn" onClick = {this.onNavBtnClicked}>LOAD NEXT 10</button>
-          <button className = "nav-btn" onClick = {this.onNavBtnClicked}>PREDICT</button>
+          <button className = "nav-btn" onClick = {this.props.onLoadImages}>LOAD NEXT 10</button>
+          <button className = "nav-btn" onClick = {this.props.onLoadPredictions}>PREDICT</button>
         </section>
       </nav>
     )

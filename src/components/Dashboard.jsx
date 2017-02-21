@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import AppHeader from './AppHeader.jsx';
+
+import HttpHelper from '../services/HttpHelper.js';
 import appConstants from '../constants/appConstants.js';
+
+import AppHeader from './AppHeader.jsx';
 import Demo from './Demo.jsx';
 import DemoInformation from './DemoInformation.jsx';
 
@@ -10,14 +13,84 @@ require('../scss/dashboard.scss');
 class Dashboard extends Component {
   constructor() {
     super();
+    this.init()
     this.onViewChange = this.onViewChange.bind(this);
+    this.onLoadPredictions = this.onLoadPredictions.bind(this);
+    this.onLoadImages = this.onLoadImages.bind(this);
+  }
+
+  init() {
+    this.AllImages = appConstants.images;
+    this.IMAGE_TYPE_HEALTHY = "healthy";
+    this.IMAGE_TYPE_DISEASED = "diseased";
+    const IMAGE_NOS = 5;
+    let healthyImages = this.AllImages[this.IMAGE_TYPE_HEALTHY].slice(0,IMAGE_NOS);
+    let diseasedImages = this.AllImages[this.IMAGE_TYPE_DISEASED].slice(0,IMAGE_NOS);
+    let images = healthyImages.concat(diseasedImages);
     this.state = {
-      currentView: Demo
+      currentView: Demo,
+      predictions: images,
+      isPredicting: false,
+      predictingTextClass: 'predicted-text-hidden'
+    }
+  }
+
+  onLoadPredictions() {
+    let params = {
+      start_index: appConstants.image_start_index,
+      end_index: appConstants.image_end_index,
+      filter_choice: 'all'
     };
+    let promise = HttpHelper.get('http://localhost:8000/predictions', params);
+    this.setState({
+      isPredicting: true,
+      predictingTextClass: 'predicted-text'
+    });
+    promise.then((response) => {
+      let tranformedPredictions = this.transformPredictions(response);
+      this.setState({
+        predictions: tranformedPredictions,
+        isPredicting: false,
+        predictingTextClass: 'predicted-text'
+      });
+    }).catch((failure) => {
+      this.setState({
+        isPredicting: false,
+        predictingTextClass: 'predicted-text-hidden'
+      });
+      console.log('Promise Failed: ', failure);
+    });
   }
 
   onLoadImages() {
-    
+    let healthyImagesAll = this.AllImages[this.IMAGE_TYPE_HEALTHY];
+    let diseasedImagesAll = this.AllImages[this.IMAGE_TYPE_DISEASED];
+    if(healthyImagesAll.length === appConstants.image_end_index || diseasedImagesAll.length === appConstants.image_end_index) {
+      appConstants.image_start_index = 0;
+      appConstants.image_end_index = 5;
+    }
+    let start_index = appConstants.image_start_index + 5;
+    let end_index = appConstants.image_end_index + 5;
+    let healthyImages = this.AllImages[this.IMAGE_TYPE_HEALTHY].slice(start_index,end_index);
+    let diseasedImages = this.AllImages[this.IMAGE_TYPE_DISEASED].slice(start_index,end_index);
+    let images = healthyImages.concat(diseasedImages);
+    appConstants.image_start_index = start_index;
+    appConstants.image_end_index = end_index;
+    this.setState({
+      predictions: images,
+      isPredicting: false,
+      predictingTextClass: 'predicted-text-hidden'
+    });
+  }
+
+  transformPredictions(predictions) {
+    return predictions.map((val, index) => {
+      return {
+        url: val.img_url.replace('retina/retina_images/', ''),
+        actual: val.actual,
+        predicted: val.predicted
+      }
+    });
   }
 
   onViewChange(currentView) {
@@ -34,12 +107,16 @@ class Dashboard extends Component {
 
   render() {
     let CurrentView = this.state.currentView;
+    console.log("State: ", this.state);
     let props = {
-      images: appConstants.images
+      predictions: this.state.predictions,
+      isPredicting: this.state.isPredicting,
+      predictingTextClass: this.state.predictingTextClass
     }
     return (
       <section className = "dashboard-container">
-        <AppHeader onViewChange = {this.onViewChange} />
+        <AppHeader onViewChange = {this.onViewChange} onLoadImages = {this.onLoadImages}
+          onLoadPredictions = {this.onLoadPredictions} />
         <CurrentView {...props} />
       </section>
     )
