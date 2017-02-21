@@ -32,7 +32,8 @@ class Demo extends Component {
         imgPath,
         predicted: (val.predicted !== null && val.predicted !== undefined) ? val.predicted : 'processing...',
         predictedTextClass: this.state.predictingTextClass,
-        blinkClass: this.state.isPredicting ? 'blink-me' : ''
+        blinkClass: this.state.isPredicting ? 'blink-me' : '',
+        imageBorderClass: val.actual === 0 ? 'retina-img-normal' : 'retina-img-diseased'
       };
       return <PredictionImage {...props} />
     });

@@ -8,7 +8,8 @@ class PredictionImage extends Component {
     this.state = {
       predictedVal: this.props.predicted,
       predictedTextClass: 'predicted-text-hidden',
-      blinkClass: ''
+      blinkClass: '',
+      imageBorderClass: this.props.imageBorderClass+' retina-img-prediction'
     };
   }
 
@@ -18,12 +19,14 @@ class PredictionImage extends Component {
       newState = {
         predictedVal: nextProps.predicted,
         predictedTextClass: nextProps.predictedTextClass,
-        blinkClass: nextProps.blinkClass
+        blinkClass: nextProps.blinkClass,
+        imageBorderClass: nextProps.imageBorderClass+' retina-img-prediction'
       }
     } else {
       newState = {
         predictedTextClass: nextProps.predictedTextClass,
-        blinkClass: nextProps.blinkClass
+        blinkClass: nextProps.blinkClass,
+        imageBorderClass: nextProps.imageBorderClass+' retina-img-prediction'
       }
     }
     this.setState(newState);
@@ -42,7 +45,7 @@ class PredictionImage extends Component {
     }
     return (
       <figure className = 'predictions-img-figure align-vertical-center'>
-        <img key = {props.index} className = 'retina-img-prediction' src = {props.imgPath}/>
+        <img key = {props.index} className = {this.state.imageBorderClass} src = {props.imgPath}/>
         <figcaption className = "predictions-img-info">
           <p className = "predictions-info-text"><b className = {this.state.predictedTextClass}><span className = {this.state.blinkClass}>{predictedVal}</span></b></p>
         </figcaption>
