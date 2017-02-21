@@ -38,9 +38,9 @@ class PredictionImage extends Component {
     let predictedVal = 'processing...';
     if(predicted !== 'processing...') {
       if(predicted === 0) {
-        predictedVal = "NORMAL";
+        predictedVal = "WITHOUT DISEASE";
       } else {
-        predictedVal = "DISEASED";
+        predictedVal = "WITH DISEASE";
       }
     }
     return (
