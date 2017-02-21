@@ -31,7 +31,8 @@ class Dashboard extends Component {
       currentView: Demo,
       predictions: images,
       isPredicting: false,
-      predictingTextClass: 'predicted-text-hidden'
+      predictingTextClass: 'predicted-text-hidden',
+      precisionPercentage: undefined
     }
   }
 
@@ -48,10 +49,12 @@ class Dashboard extends Component {
     });
     promise.then((response) => {
       let tranformedPredictions = this.transformPredictions(response);
+      let precisionPercentage = this.calculatePrecision(tranformedPredictions);
       this.setState({
         predictions: tranformedPredictions,
         isPredicting: false,
-        predictingTextClass: 'predicted-text'
+        predictingTextClass: 'predicted-text',
+        precisionPercentage: precisionPercentage
       });
     }).catch((failure) => {
       this.setState({
@@ -60,6 +63,20 @@ class Dashboard extends Component {
       });
       console.log('Promise Failed: ', failure);
     });
+  }
+
+  calculatePrecision(predictions) {
+    let falseNegativesCount = 0, truePositivesCount;
+    let totalPredictions = predictions.length
+    for(let i = 0; i < totalPredictions; i++) {
+      if(predictions[i].actual !== predictions[i].predicted) {
+        falseNegativesCount++;
+      }
+    }
+    truePositivesCount = totalPredictions - falseNegativesCount;
+
+    console.log("Prediction Percentage: ", ((totalPredictions - falseNegativesCount) / totalPredictions)*100);
+    return ((totalPredictions - falseNegativesCount) / totalPredictions)*100;
   }
 
   onLoadImages() {
@@ -107,7 +124,6 @@ class Dashboard extends Component {
 
   render() {
     let CurrentView = this.state.currentView;
-    console.log("State: ", this.state);
     let props = {
       predictions: this.state.predictions,
       isPredicting: this.state.isPredicting,
@@ -116,7 +132,7 @@ class Dashboard extends Component {
     return (
       <section className = "dashboard-container">
         <AppHeader onViewChange = {this.onViewChange} onLoadImages = {this.onLoadImages}
-          onLoadPredictions = {this.onLoadPredictions} />
+          onLoadPredictions = {this.onLoadPredictions} precisionPercentage = {this.state.precisionPercentage} />
         <CurrentView {...props} />
       </section>
     )

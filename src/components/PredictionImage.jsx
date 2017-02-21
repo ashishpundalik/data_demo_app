@@ -14,12 +14,18 @@ class PredictionImage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let newState;
+    console.log(nextProps);
+    let newState, blinkClass;
     if(nextProps.predicted !== this.props.predicted) {
+      if(nextProps.predicted !== nextProps.actualVal) {
+        blinkClass = 'incorrect-prediction-text';
+      } else {
+        blinkClass = nextProps.blinkClass;
+      }
       newState = {
         predictedVal: nextProps.predicted,
         predictedTextClass: nextProps.predictedTextClass,
-        blinkClass: nextProps.blinkClass,
+        blinkClass: blinkClass,
         imageBorderClass: nextProps.imageBorderClass+' retina-img-prediction'
       }
     } else {

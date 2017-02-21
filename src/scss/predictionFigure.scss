@@ -24,6 +24,10 @@
       font-size: 0.7em;
       margin: 0;
       padding: 0;
+      .incorrect-prediction-text {
+        color: #8D262B;
+        text-shadow: 2px 2px 4px #000;
+      }
       .predicted-text-hidden {
         visibility: hidden;
       }

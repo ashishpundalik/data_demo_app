@@ -3,8 +3,11 @@ import React, { Component } from 'react';
 require('../scss/appHeader.scss');
 
 class AppHeader extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {
+      precisionPercentage: ''
+    };
     this.resetClassName = (classNameVal, elems) => {
       for(let elem of elems) {
         elem.className = classNameVal;
@@ -15,6 +18,13 @@ class AppHeader extends Component {
       event.stopPropagation();
       this.props.onViewChange(view);
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      precisionPercentage: (nextProps.precisionPercentage !== undefined) ?
+        nextProps.precisionPercentage + "%" : ''
+    });
   }
 
   render() {
@@ -30,6 +40,7 @@ class AppHeader extends Component {
         <section className = "header-nav-btns-container">
           <button className = "nav-btn" onClick = {this.props.onLoadImages}>LOAD NEXT 10</button>
           <button className = "nav-btn" onClick = {this.props.onLoadPredictions}>PREDICT</button>
+          <p className = "precision-text"><b>Precision: {this.state.precisionPercentage}</b></p>
         </section>
       </nav>
     )
