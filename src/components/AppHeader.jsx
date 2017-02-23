@@ -39,7 +39,7 @@ class AppHeader extends Component {
         </header>
         <section className = "header-nav-btns-container">
           <button className = "nav-btn" onClick = {this.props.onLoadImages}>LOAD NEXT 10</button>
-          <button className = "nav-btn" onClick = {this.props.onLoadPredictions}>PREDICT</button>
+          <button className = "nav-btn" onClick = {this.props.predict}>PREDICT</button>
           <p className = "precision-text"><b>Precision: {this.state.precisionPercentage}</b></p>
         </section>
       </nav>

@@ -5,43 +5,16 @@ require('../scss/predictionFigure.scss');
 class PredictionImage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      predictedVal: this.props.predicted,
-      predictedTextClass: 'predicted-text-hidden',
-      blinkClass: '',
-      imageBorderClass: this.props.imageBorderClass+' retina-img-prediction'
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    let newState, blinkClass;
-    if(nextProps.predicted !== this.props.predicted) {
-      if(nextProps.predicted !== nextProps.actualVal) {
-        blinkClass = 'incorrect-prediction-text';
-      } else {
-        blinkClass = nextProps.blinkClass;
-      }
-      newState = {
-        predictedVal: nextProps.predicted,
-        predictedTextClass: nextProps.predictedTextClass,
-        blinkClass: blinkClass,
-        imageBorderClass: nextProps.imageBorderClass+' retina-img-prediction'
-      }
-    } else {
-      newState = {
-        predictedTextClass: nextProps.predictedTextClass,
-        blinkClass: nextProps.blinkClass,
-        imageBorderClass: nextProps.imageBorderClass+' retina-img-prediction'
-      }
-    }
-    this.setState(newState);
   }
 
   render() {
     let props = this.props;
-    let predicted = this.state.predictedVal;
+    let predicted = this.props.predictedVal;
     let predictedVal = 'processing...';
+    let predictingTextClass = this.props.isPredicting ? 'predicted-text' : 'predicted-text-hidden';
+    let blinkClass = this.props.isPredicting ? 'blink-me' : '';
+    let imageClass = (this.props.actual === 1 ? "retina-img-diseased" : "retina-img-normal")
+      + ' retina-img-prediction';
     if(predicted !== 'processing...') {
       if(predicted === 0) {
         predictedVal = "WITHOUT DISEASE";
@@ -51,9 +24,9 @@ class PredictionImage extends Component {
     }
     return (
       <figure className = 'predictions-img-figure align-vertical-center'>
-        <img key = {props.index} className = {this.state.imageBorderClass} src = {props.imgPath}/>
+        <img key = {props.index} className = {imageClass} src = {props.imgPath}/>
         <figcaption className = "predictions-img-info">
-          <p className = "predictions-info-text"><b className = {this.state.predictedTextClass}><span className = {this.state.blinkClass}>{predictedVal}</span></b></p>
+          <p className = "predictions-info-text"><b className = {predictingTextClass}><span className = {blinkClass}>{predictedVal}</span></b></p>
         </figcaption>
       </figure>
     )

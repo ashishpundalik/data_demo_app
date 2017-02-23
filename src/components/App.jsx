@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from './Dashboard.jsx';
+import Dashboard from '../containers/DashboardContainer.js';
 
 class App extends React.Component {
   constructor() {
