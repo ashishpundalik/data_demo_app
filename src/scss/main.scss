@@ -27,5 +27,14 @@ button:focus {
     height: 100%;
     color: #FFFFFF;
     background: #000000;
+    .retina-img-correctly-predicted {
+      border: 4px solid #3D8C33;
+    }
+    .retina-img-incorrectly-predicted {
+      border: 4px solid #8D262B;
+    }
+    .diseased-text {
+      color: #58848B;
+    }
   }
 }
