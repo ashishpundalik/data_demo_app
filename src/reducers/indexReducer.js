@@ -44,20 +44,17 @@ const loadImages = (state = {}, action) => {
         end_index,
         predictions: nextImages,
         images: state.images,
-        isPredicting: false,
-        isPredictionComplete: false
+        isPredicting: false
       });
       return relevantState;
     case PREDICT:
       return Object.assign({}, state, {
-        isPredicting: true,
-        isPredictionComplete: state.isPredictionComplete
+        isPredicting: true
       });
     case PREDICTION_COMPLETE:
       return Object.assign({}, state, {
         predictions: transformPredictions(action.predictionResponse),
-        isPredicting: false,
-        isPredictionComplete: true
+        isPredicting: false
       });
     default:
       return state;

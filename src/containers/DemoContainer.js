@@ -2,9 +2,9 @@ import { connect } from 'react-redux';
 import Demo from '../components/Demo.jsx';
 
 let mapStateToProps = (state, ownProps) => {
-  let { isPredicting } = state;
+  let { isPredicting, predictions } = state.rootState;
   return Object.assign({}, {
-    predictions: state.predictions,
+    predictions,
     isPredicting
   });
 }

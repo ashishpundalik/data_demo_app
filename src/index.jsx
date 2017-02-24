@@ -1,13 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { Router, Route, browserHistory } from 'react-router';
+import { syncHistoryWithStore, routerReducer } from 'react-router-redux';
 import thunk from 'redux-thunk';
 
 import HttpHelper from './services/HttpHelper.js';
 import rootReducer from './reducers/indexReducer.js';
-import App from './components/App.jsx';
-// import appConstants from './constants/appConstants.js';
+import routes from './routes.js';
 
 require('./scss/main.scss');
 
@@ -21,26 +22,32 @@ let preloadImages = (images) => {
 
 let renderApp = () => {
   render(
-    <Provider store = { store }>
-      <App />
+    <Provider store={store}>
+      <Router history={history} routes={routes} />
     </Provider>,
     document.getElementById("app")
   );
 }
 
+let history;
+
 let createReduxStore = (images) => {
   const START_INDEX = 0, END_INDEX = 5;
   let initialState = Object.assign({}, {
-    predictions: images.healthy.slice(START_INDEX, END_INDEX).
-      concat(images.diseased.slice(START_INDEX, END_INDEX)),
-    images,
-    start_index: START_INDEX,
-    end_index: END_INDEX,
-    isPredicting: false,
-    isPredictionComplete: false
+    rootState: {
+      predictions: images.healthy.slice(START_INDEX, END_INDEX).
+        concat(images.diseased.slice(START_INDEX, END_INDEX)),
+      images,
+      start_index: START_INDEX,
+      end_index: END_INDEX,
+      isPredicting: false
+    }
   });
-  console.log("Root reducer ", rootReducer);
-  store = createStore(rootReducer, initialState, applyMiddleware(thunk));
+  store = createStore(combineReducers({
+    rootState: rootReducer,
+    routing: routerReducer
+  }), initialState, applyMiddleware(thunk));
+  history = syncHistoryWithStore(browserHistory, store);
 }
 
 let init = (response) => {

@@ -19,7 +19,7 @@ export const predictionComplete = (predictionResponse) => {
 
 export const predictImages = () => {
   return (dispatch, getState) => {
-      let state = getState();
+      let state = getState().rootState;
       let params = {
         start_index: state.start_index,
         end_index: state.end_index,

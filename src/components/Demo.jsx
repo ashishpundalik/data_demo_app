@@ -6,7 +6,6 @@ require('../scss/demo.scss');
 
 class Demo extends Component {
   render() {
-    console.log("DEMO", this.props);
     let ImageElems = this.props.predictions.map((val, index) => {
       let imgPath = `assets/retina_images/${val.url}`;
       let props = {

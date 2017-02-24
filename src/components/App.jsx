@@ -1,5 +1,6 @@
 import React from 'react';
 import Dashboard from '../containers/DashboardContainer.js';
+import { IndexRoute } from 'react-router';
 
 class App extends React.Component {
   constructor() {
@@ -9,7 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <section className = "app-container">
-        <Dashboard />
+        {this.props.children}
       </section>
     )
   }

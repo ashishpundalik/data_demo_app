@@ -4,7 +4,7 @@ import { predictImages } from '../actions/PredictImagesAction.js';
 import AppHeader from '../components/AppHeader.jsx';
 
 let mapStateToProps = (state, ownProps) => {
-  return state;
+  return Object.assign({}, state.rootState);
 }
 
 let mapDispatchToProps = (dispatch, ownProps) => {

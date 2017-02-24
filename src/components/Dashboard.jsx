@@ -4,8 +4,6 @@ import HttpHelper from '../services/HttpHelper.js';
 import appConstants from '../constants/appConstants.js';
 
 import AppHeader from '../containers/AppHeaderContainer.js';
-import Demo from '../containers/DemoContainer.js';
-import DemoInformation from './DemoInformation.jsx';
 
 
 require('../scss/dashboard.scss');
@@ -15,7 +13,7 @@ class Dashboard extends Component {
     return (
       <section className = "dashboard-container">
         <AppHeader />
-        <Demo />
+        {this.props.children}
       </section>
     )
   }

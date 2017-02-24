@@ -3,6 +3,32 @@
   height: 200px;
   width: 200px;
   flex-direction: column;
+  .loading-overlay-hidden {
+    display: none;
+  }
+  .loading-overlay {
+    position: absolute;
+    z-index: 3;
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #000000;
+    opacity: 0.5;
+    .loading-overlay-img {
+      width: 30%;
+      height: 30%;
+      background-image: url(../assets/loading-img.gif);
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+    p {
+      font-size: 0.5em;
+    }
+  }
   .retina-img-prediction {
     height: 150px;
     width: 150px;

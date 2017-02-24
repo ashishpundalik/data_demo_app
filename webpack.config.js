@@ -33,7 +33,12 @@ module.exports = (function() {
     plugins: [new HTMLWebpackPlugin({
       template: APP_DIR + '/assets/app.html',
       inject: 'body'
-    })]
+    })],
+    devServer: {
+      historyApiFallback: true,
+      contentBase: './',
+      hot: true
+    },
   }
 
   return config;
