@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import PredictionImage from '../components/PredictionImage.jsx';
 
 let mapStateToProps = (state, ownProps) => {
-  console.log("Prediction ", state, ownProps);
   let { isPredicting, isPredictionComplete } = state;
   let prediction = state.predictions[ownProps.index];
   let imgPath = `assets/retina_images/${prediction.url}`;

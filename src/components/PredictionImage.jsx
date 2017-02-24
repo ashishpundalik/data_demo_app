@@ -5,27 +5,33 @@ require('../scss/predictionFigure.scss');
 class PredictionImage extends Component {
   constructor(props) {
     super(props);
+    this.getImageHighlight = () => {
+      let { actual, predictedVal } = this.props;
+      if(predictedVal !== undefined && predictedVal !== null && predictedVal !== '') {
+        if(actual !== predictedVal) {
+          return 'retina-img-prediction retina-img-incorrectly-predicted';
+        }
+        return 'retina-img-prediction retina-img-correctly-predicted';
+      }
+      return 'retina-img-prediction';
+    }
   }
 
   render() {
     let props = this.props;
-    let predicted = this.props.predictedVal;
-    let predictingTextClass = (this.props.isPredictionComplete || this.props.isPredicting)
-      ? 'predicted-text' : 'predicted-text-hidden';
-    let blinkClass = this.props.isPredicting ? 'blink-me' : '';
-    let imageClass = (this.props.actual === 1 ? "retina-img-diseased" : "retina-img-normal")
-      + ' retina-img-prediction';
-    let predictedVal = "predicting...";
-    if(predicted === 0) {
-      predictedVal = "WITHOUT DISEASE";
-    } else if(predicted === 1) {
-      predictedVal = "WITH DISEASE";
+    let actual = this.props.actual;
+    let imageClass = this.getImageHighlight();
+    let actualVal = '';
+    if(actual === 0) {
+      actualVal = "WITHOUT DISEASE";
+    } else if(actual === 1) {
+      actualVal = "WITH DISEASE";
     }
     return (
       <figure className = 'predictions-img-figure align-vertical-center'>
         <img key = {props.index} className = {imageClass} src = {props.imgPath}/>
         <figcaption className = "predictions-img-info">
-          <p className = "predictions-info-text"><b className = {predictingTextClass}><span className = {blinkClass}>{predictedVal}</span></b></p>
+          <p className = "predictions-info-text"><b className = 'predicted-text'><span>{actualVal}</span></b></p>
         </figcaption>
       </figure>
     )
