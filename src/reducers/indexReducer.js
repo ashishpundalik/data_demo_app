@@ -1,5 +1,5 @@
 import { LOAD_IMAGES } from '../actions/LoadImagesAction.js';
-import { PREDICT, predictImages } from '../actions/PredictImagesAction.js';
+import { PREDICT, PREDICTION_COMPLETE } from '../actions/PredictImagesAction.js';
 
 let getNextImages = (start_index, end_index, images) => {
   let healthyImages = images.healthy.slice(start_index, end_index);
@@ -22,8 +22,19 @@ let getUpdatedIndices = (healthyImagesCount, diseasedImagesCount, initialStartIn
   }
 }
 
+let transformPredictions = (predictions) => {
+  let transformedPredictions = predictions.map((prediction) => {
+    let { actual, predicted } = prediction;
+    return {
+      actual,
+      predicted,
+      url: prediction.img_url.replace('retina/retina_images', '')
+    }
+  });
+  return transformedPredictions;
+}
+
 const loadImages = (state = {}, action) => {
-  console.log("REDUCER", action.type);
   switch (action.type) {
     case LOAD_IMAGES:
       let { start_index, end_index } = getUpdatedIndices(state.images.healthy.length, state.images.diseased.length, state.start_index, state.end_index);
@@ -34,25 +45,20 @@ const loadImages = (state = {}, action) => {
         predictions: nextImages,
         images: state.images,
         isPredicting: false,
-        predictingTextClass: 'predicted-text-hidden'
+        isPredictionComplete: false
       });
       return relevantState;
     case PREDICT:
-      return (dispatch) => {
-        console.log("PREDICT DISPATCH");
-        let params = {
-          start_index: state.start_index,
-          end_index: state.end_index,
-          filter_choice: 'all'
-        };
-        let promise = HttpHelper.get("http://localhost:8000/prediction", params);
-        promise.then((response) => {
-          dispatch(predictImages(response));
-        }).catch((err) => {
-          console.log('Promise failed');
-        });
-        return promise;
-      }
+      return Object.assign({}, state, {
+        isPredicting: true,
+        isPredictionComplete: state.isPredictionComplete
+      });
+    case PREDICTION_COMPLETE:
+      return Object.assign({}, state, {
+        predictions: transformPredictions(action.predictionResponse),
+        isPredicting: false,
+        isPredictionComplete: true
+      });
     default:
       return state;
   }

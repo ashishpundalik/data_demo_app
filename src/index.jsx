@@ -36,7 +36,8 @@ let createReduxStore = (images) => {
     images,
     start_index: START_INDEX,
     end_index: END_INDEX,
-    isPredicting: false
+    isPredicting: false,
+    isPredictionComplete: false
   });
   console.log("Root reducer ", rootReducer);
   store = createStore(rootReducer, initialState, applyMiddleware(thunk));
