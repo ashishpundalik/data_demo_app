@@ -9,15 +9,15 @@ class PredictionInfo extends Component {
         <div className = 'prediction-info-content-container'>
           <div className = 'prediction-info-content'>
             <div className = 'info-img-container'>
-              <img src = 'assets/retina_images/10154_right.jpeg' className = "retina-img-correctly-predicted" />
+              <img src = 'assets/retina_images/10154_right.jpeg' className = 'retina-img-correctly-predicted' />
               <p>WITHOUT DISEASE</p>
             </div>
             <p className = 'info-text'>Correct Prediction of a with disease retina</p>
           </div>
           <div className = 'prediction-info-content'>
             <div className = 'info-img-container'>
-              <img src = 'assets/retina_images/10154_right.jpeg' className = "retina-img-incorrectly-predicted" />
-              <p className = "diseased-text">WITH DISEASE</p>
+              <img src = 'assets/retina_images/10154_right.jpeg' className = 'retina-img-incorrectly-predicted' />
+              <p className = 'diseased-text'>WITH DISEASE</p>
             </div>
             <p className = 'info-text'>Wrong Prediction of an affected retina</p>
           </div>

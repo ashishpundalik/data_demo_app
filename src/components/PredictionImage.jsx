@@ -22,22 +22,22 @@ class PredictionImage extends Component {
     let actual = this.props.actual;
     let imageClass = this.getImageHighlight();
     let actualVal = '';
-    let overlayClass = this.props.isPredicting ? "loading-overlay" : "loading-overlay-hidden";
-    let predictedTextClass = (actual === 0 ? "predicted-text" : "predicted-text diseased-text");
+    let overlayClass = this.props.isPredicting ? 'loading-overlay' : 'loading-overlay-hidden';
+    let predictedTextClass = (actual === 0 ? 'predicted-text' : 'predicted-text diseased-text');
     if(actual === 0) {
-      actualVal = "WITHOUT DISEASE";
+      actualVal = 'WITHOUT DISEASE';
     } else if(actual === 1) {
-      actualVal = "WITH DISEASE";
+      actualVal = 'WITH DISEASE';
     }
     return (
       <figure className = 'predictions-img-figure align-vertical-center'>
         <div className = {overlayClass}>
-          <div className = "loading-overlay-img"></div>
+          <div className = 'loading-overlay-img'></div>
           <p>Predicting...</p>
         </div>
         <img key = {props.index} className = {imageClass} src = {props.imgPath}/>
-        <figcaption className = "predictions-img-info">
-          <p className = "predictions-info-text"><b className = {predictedTextClass}><span>{actualVal}</span></b></p>
+        <figcaption className = 'predictions-img-info'>
+          <p className = 'predictions-info-text'><b className = {predictedTextClass}><span>{actualVal}</span></b></p>
         </figcaption>
       </figure>
     )

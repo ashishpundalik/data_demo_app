@@ -17,7 +17,7 @@ module.exports = (function() {
     module: {
       loaders: [{
         test: /\.(png|jpeg|gif|jpg)$/,
-        loader: "file-loader?&name=assets/retina_images/[name].[ext]"
+        loader: 'file-loader?&name=assets/retina_images/[name].[ext]'
       }, {
         test: /\.jsx?$/,
         loader: 'babel-loader',

@@ -9,7 +9,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <section className = "app-container">
+      <section className = 'app-container'>
         {this.props.children}
       </section>
     )

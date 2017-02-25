@@ -1,6 +1,6 @@
 import HttpHelper from '../services/HttpHelper.js';
 
-export const PREDICT = "PREDICT";
+export const PREDICT = 'PREDICT';
 
 export const predict = () => {
   return {
@@ -8,7 +8,7 @@ export const predict = () => {
   }
 }
 
-export const PREDICTION_COMPLETE = "PREDICTION_COMPLETE";
+export const PREDICTION_COMPLETE = 'PREDICTION_COMPLETE';
 
 export const predictionComplete = (predictionResponse) => {
   return {
@@ -26,11 +26,11 @@ export const predictImages = () => {
         filter_choice: 'all'
       };
       dispatch(predict());
-      return HttpHelper.get("http://localhost:8000/predictions", params)
+      return HttpHelper.get('http://localhost:8000/predictions', params)
         .then((response) => {
           dispatch(predictionComplete(response));
         }).catch((err) => {
-          console.log("Promise Failed");
+          console.log('Promise Failed');
         })
   }
 }

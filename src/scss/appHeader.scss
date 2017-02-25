@@ -19,6 +19,9 @@
     p {
       font-size: 0.5em;
     }
+    .blog-page-link {
+      font-size: 0.6em;
+    }
   }
   .header-nav-btns-container {
     width: 50%;
@@ -27,6 +30,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    .activity-info-text {
+      font-size: 0.5em;
+    }
     .nav-btn {
       width: 30%;
       border: 0;

@@ -1,4 +1,4 @@
-import { LOAD_IMAGES } from '../actions/LoadImagesAction.js';
+import { LOAD_IMAGES, LOAD_NEXT_IMAGES, INTIAL_IMAGES_LOADED } from '../actions/LoadImagesAction.js';
 import { PREDICT, PREDICTION_COMPLETE } from '../actions/PredictImagesAction.js';
 
 let getNextImages = (start_index, end_index, images) => {
@@ -37,6 +37,14 @@ let transformPredictions = (predictions) => {
 const loadImages = (state = {}, action) => {
   switch (action.type) {
     case LOAD_IMAGES:
+      return Object.assign({}, state, {
+        isLoadingImages: true
+      });
+    case INTIAL_IMAGES_LOADED:
+      return Object.assign({}, action.initialState, {
+        isLoadingImages: false
+      });
+    case LOAD_NEXT_IMAGES:
       let { start_index, end_index } = getUpdatedIndices(state.images.healthy.length, state.images.diseased.length, state.start_index, state.end_index);
       let nextImages = getNextImages(start_index, end_index, state.images);
       let relevantState = Object.assign({}, {

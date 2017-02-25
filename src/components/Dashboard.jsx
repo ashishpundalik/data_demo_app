@@ -11,7 +11,7 @@ require('../scss/dashboard.scss');
 class Dashboard extends Component {
   render() {
     return (
-      <section className = "dashboard-container">
+      <section className = 'dashboard-container'>
         <AppHeader />
         {this.props.children}
       </section>

@@ -12,7 +12,7 @@ class Demo extends Component {
     return (
       <section className = 'app-view app-demo-container'>
         <section className = 'retinopathy-images-table'>
-          <div className = "retinopathy-images-grid-container">
+          <div className = 'retinopathy-images-grid-container'>
             {ImageElems}
           </div>
         </section>

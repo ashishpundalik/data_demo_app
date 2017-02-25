@@ -1,19 +1,26 @@
 import { connect } from 'react-redux';
-import { loadImages } from '../actions/LoadImagesAction.js';
+import { loadNextImages, loadInitialImages } from '../actions/LoadImagesAction.js';
 import { predictImages } from '../actions/PredictImagesAction.js';
 import AppHeader from '../components/AppHeader.jsx';
 
 let mapStateToProps = (state, ownProps) => {
-  return Object.assign({}, state.rootState);
+  return Object.assign({}, state.rootState, {
+    locationBeforeTransitions: state.routing.locationBeforeTransitions
+  });
 }
 
 let mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onLoadImages: () => {
-      dispatch(loadImages());
+    onLoadNextImages: () => {
+      dispatch(loadNextImages());
     },
+
     predict: () => {
       dispatch(predictImages());
+    },
+
+    onLoadImages: () => {
+      dispatch(loadInitialImages())
     }
   }
 }
