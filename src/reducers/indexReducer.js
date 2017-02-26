@@ -61,7 +61,9 @@ const loadImages = (state = {}, action) => {
       });
     case PREDICTION_COMPLETE:
       return Object.assign({}, state, {
-        predictions: transformPredictions(action.predictionResponse),
+        predictions: transformPredictions(action.predictionResponse.predictions),
+        precision: action.predictionResponse.precision,
+        recall: action.predictionResponse.recall,
         isPredicting: false
       });
     default:

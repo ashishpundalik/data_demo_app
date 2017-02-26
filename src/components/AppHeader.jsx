@@ -16,7 +16,13 @@ class AppHeader extends Component {
           className = 'nav-btn' key = '1' onClick = {this.props.onLoadNextImages}>LOAD NEXT 10</button>;
         let predictBtn = <button disabled = {this.props.isPredicting}
           className = 'nav-btn' key = '2' onClick = {this.props.predict}>PREDICT</button>;
-        infoElems = [loadImagesBtn, predictBtn];
+        let precisionText = (this.props.precision !== null && this.props.precision !== undefined)
+          ? `${this.props.precision}%` : '';
+        let recallText = (this.props.recall !== null && this.props.recall !== undefined)
+          ? `${this.props.recall}%` : '';
+        let precisionElem = <p key = '3' className = "prediction-info-text">Precision: {precisionText}</p>
+        let recallElem = <p key = '4' className = "prediction-info-text">Recall: {recallText}</p>
+        infoElems = [loadImagesBtn, predictBtn, precisionElem, recallElem];
       } else if( path === INFO || path === BLOG ) {
         let activityInfo = this.props.isLoadingImages ? 'Please wait as the images load' : '';
         let loadImagesBtn = <button onClick = {this.props.onLoadImages} key = '1' className = 'nav-btn'>LOAD IMAGES</button>;
