@@ -7,8 +7,8 @@ export const LOAD_IMAGES = 'LOAD_IMAGES'
 
 let fetchImageInfo = () => {
   require('../assets/bg-image.jpg');
-  require('../assets/blog-info-img-normal.png');
-  require('../assets/blog-info-img-affected.png');
+  require('../assets/retina_images/normal.jpg');
+  require('../assets/retina_images/affected.jpg');
   return HttpHelper.get('http://localhost:8000/getImages', {});
 }
 

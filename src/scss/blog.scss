@@ -7,18 +7,25 @@
       width: 100%;
       display: flex;
       flex-direction: row;
-      justify-content: center;
-      align-items: center;
+      justify-content: left;
+      align-items: left;
       .blog-content-text-container {
         width: 58%;
         margin-left: 2%;
+        text-align: justify;
+        margin-right: 2%;
       }
       .blog-content-imgs-container {
-        width: 40%;
+        width: 20%;
         margin-left: 2%;
+        text-align: center;
         .blog-info-image {
-          width: 250px;
+          width: 280px;
           height: 250px;
+          margin-top: 2%;
+        }
+        .caption {
+          display: block;
         }
       }
     }

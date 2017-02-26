@@ -10,7 +10,7 @@
     height: 100%;
     width: 50%;
     flex-direction: column;
-    margin-left: 1%;
+    margin-left: 2%;
     h1 {
       font-size: 0.7em;
       margin: 0;
@@ -21,6 +21,12 @@
     }
     .blog-page-link {
       font-size: 0.6em;
+      color: #000;
+      border-bottom: 1px dotted #000;
+      text-decoration: none;
+    }
+    .info-page-link {
+      color: #000;
     }
   }
   .header-nav-btns-container {

@@ -30,8 +30,10 @@ class Blog extends Component {
             </p>
           </div>
           <div className = 'blog-content-imgs-container'>
-            <img className = 'blog-info-image' src = '../assets/retina_images/blog-info-img-normal.png' />
-            <img className = 'blog-info-image' src = '../assets/retina_images/blog-info-img-affected.png' />
+            <img className = 'blog-info-image' src = '../assets/retina_images/normal.jpg' />
+            <span class="caption">Normal Vision</span>
+            <img className = 'blog-info-image' src = '../assets/retina_images/affected.jpg' />
+            <span class="caption">Vision affected by Diabetic Retinopathy</span>
           </div>
         </section>
       </section>

@@ -39,12 +39,16 @@ class AppHeader extends Component {
     return (
       <nav className = 'app-header-container'>
         <header className = 'app-header'>
-          <h1>Diabetic Retinopathy Diagnosis(DRD)</h1>
+          <h1>
+            <Link className = 'info-page-link' to = '/info' activeStyle = {{color: 'black'}}>
+            Diabetic Retinopathy Diagnosis(DRD)
+            </Link>
+          </h1>
           <p>This page demos an automated method of Diabetic Retinopathy screening
             of fundus images of the eye. The images are classified as normal or affected using
             a deep neural network.
           </p>
-          <Link className = 'blog-page-link' to = '/blog' activeStyle = {{color: 'red'}} >How does is work?</Link>
+          <Link className = 'blog-page-link' to = '/blog' activeStyle = {{color: 'black'}}>How does it work?</Link>
         </header>
         <section className = 'header-nav-btns-container'>
           {infoElems}
