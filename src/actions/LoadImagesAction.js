@@ -9,7 +9,7 @@ let fetchImageInfo = () => {
   require('../assets/bg-image.jpg');
   require('../assets/retina_images/normal.jpg');
   require('../assets/retina_images/affected.jpg');
-  return HttpHelper.get('http://localhost:8000/getImages', {});
+  return HttpHelper.get('getImages', {});
 }
 
 let preloadImages = (images) => {

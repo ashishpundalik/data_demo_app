@@ -26,7 +26,7 @@ export const predictImages = () => {
         filter_choice: 'all'
       };
       dispatch(predict());
-      return HttpHelper.get('http://localhost:8000/predictions', params)
+      return HttpHelper.get('predictions', params)
         .then((response) => {
           dispatch(predictionComplete(response));
         }).catch((err) => {

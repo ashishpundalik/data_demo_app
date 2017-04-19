@@ -4,6 +4,7 @@
   "description": "Demo application to showcase data capabilities",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "start": "webpack-dev-server --inline --hot"
   },
   "repository": {
