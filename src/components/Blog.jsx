@@ -26,7 +26,9 @@ class Blog extends Component {
               Deep neural networks have been used to diagnose diabetic retinopathy with fundus images of the retina.
             </p>
             <p>
-              In this demo we have used a deep neural network, trained on 26,000 fundus images.
+              In this demo we have trained a deep neural network on 26,000 retina images. The neural network which
+              is composed of 30 layers learns complex features to distinguish between a retina severely affected
+              by diabetes as opposed to one that is not affected by the disease. 
             </p>
           </div>
           <div className = 'blog-content-imgs-container'>
